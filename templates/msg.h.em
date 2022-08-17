@@ -11,7 +11,7 @@ for field in msg_fields:
     if field.type.category == field.type.CATEGORY_ARRAY and field.type.value_type.category == field.type.value_type.CATEGORY_COMPOUND:
         dep_headers.add(msg_header_name(field.type.value_type))
 }@
-@[  for header in sorted(dep_headers)]@
+@[  for header in dep_headers]@
 #include <@(header)>
 @[  end for]@
 
@@ -57,11 +57,7 @@ enum @(msg_underscored_name)_type_t {
 @[  end if]@
 };
 
-uint32_t @(msg_underscored_name)_encode(@(msg_c_type)* msg, uint8_t* buffer
-#if CANARD_ENABLE_TAO_OPTION
-    , bool tao
-#endif
-);
+uint32_t @(msg_underscored_name)_encode(@(msg_c_type)* msg, uint8_t* buffer);
 bool @(msg_underscored_name)_decode(const CanardRxTransfer* transfer, @(msg_c_type)* msg);
 
 #if defined(CANARD_DSDLC_INTERNAL)
